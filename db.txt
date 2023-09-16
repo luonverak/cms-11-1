@@ -1,0 +1,44 @@
+user{
+    id
+    username
+    email
+    password
+    profile
+}
+logo{
+    id
+    thumbnail
+    status(header,footer)
+}
+news{
+    id
+    author_id
+    title
+    description
+    banner
+    thumbnail
+    create_at
+    views
+    category
+    type
+}
+footer{
+    id 
+    description
+}
+follow_us{
+    id
+    icons
+    label
+    url
+    status
+}
+feedback{
+    id
+    username
+    email
+    telephone
+    address
+    message
+    create_at
+}
