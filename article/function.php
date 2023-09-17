@@ -141,4 +141,68 @@
             ';
         }
     }
+    function getNewsList($category,$type,$page,$limit){
+        global $connection;
+        $start = ($page-1)*$limit;
+        $sql = "SELECT * FROM `news` WHERE `category`='$category' AND `type`='$type' ORDER BY id DESC LIMIT $start,$limit";
+        $rs  = $connection->query($sql);
+        while($row=mysqli_fetch_assoc($rs)){
+            $date = date('d/M/Y',strtotime($row['create_at']));
+            echo '
+                <div class="col-4">
+                    <figure>
+                        <a href="news-detail.php?id='.$row['id'].'">
+                            <div class="thumbnail">
+                                <img src="../admin/assets/image/'.$row['thumbnail'].'" width="350" height="200" style="object-fit: cover;"  alt="">
+                            </div>
+                            <div class="detail">
+                                <h3 class="title">'.$row['title'].'</h3>
+                                <div class="date">'.$date.'</div>
+                                <div class="description">'.$row['description'].'</div>
+                            </div>
+                        </a>
+                    </figure>
+                </div>
+            ';
+        }
+    }
+    function getPageination($category,$type,$limit){
+        global $connection;
+        $sql = "SELECT COUNT(id) as total FROM news WHERE category='$category' AND type='$type';";
+        $rs  = $connection->query($sql);
+        $row = mysqli_fetch_assoc($rs);
+        $total= $row['total'];
+        $page = ceil($total/$limit);
+        for($i=1;$i<=$page;$i++){
+            echo '
+                <li>
+                    <a href="?page='.$i.'">'.$i.'</a>
+                </li>
+            ';
+        }
+    }
+    function search($query){
+        global $connection;
+        $sql = "SELECT * FROM `news` WHERE `title` LIKE '%$query%'";
+        $rs  = $connection->query($sql);
+        while($row=mysqli_fetch_assoc($rs)){
+            $date = date('d/M/Y',strtotime($row['create_at']));
+            echo '
+                <div class="col-4">
+                    <figure>
+                        <a href="news-detail.php?id='.$row['id'].'">
+                            <div class="thumbnail">
+                                 <img src="../admin/assets/image/'.$row['thumbnail'].'" width="350" height="200" style="object-fit: cover;"  alt="">
+                            </div>
+                            <div class="detail">
+                                <h3 class="title">'.$row['title'].'</h3>
+                                <div class="date">'.$date.'</div>
+                                <div class="description">'.$row['description'].'</div>
+                            </div>
+                        </a>
+                    </figure>
+                </div>
+            ';
+        }
+    }
 ?>

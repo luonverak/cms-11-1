@@ -74,6 +74,7 @@
                         if(isset($_GET['query'])) {
                             $query = $_GET['query'];
                         }
+                        
                     ?>
                     <input type="text" class="box" placeholder="Search Here" name="query" value="<?= $query ?>">
                     <button><i class="fas fa-search"></i></button>
